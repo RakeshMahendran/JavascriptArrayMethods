@@ -1,86 +1,90 @@
 import React, { useState } from 'react'
-import dataset from '../public/arraymethods.json'
+import dataset from '../src/assets/arraymethods.json'
 
 export interface dataProps {
-    batsman: string;
-    strikerate:string;
+    batsman:string;
     total_runs:string;
-    average:string;
-    numberofballs:string;
     out:string;
+    numberofballs:string; 
+    average:string;
+    strikerate:string;
 }
 
 type BattingData = dataProps[];
 
 const Average = () => {
-    const [data , setData] = useState<BattingData>(dataset)
-    console.log("data",data)
 
-    const [searchPlayer, setSearchPlayer] = useState<string>('')
-   
-    const handleSearch =  () => {
-         const filteredBatsman = data.filter((item:any)=>{
-            return item.batsman.toLowerCase().includes(searchPlayer.toLowerCase())
+    const [data,setData] = useState<BattingData>(dataset)
+    console.log("data",data)
+    
+
+    const [searchPlayer, setSearchPlayer] = useState<string>()
+    console.log("searchPlayer",searchPlayer)
+
+
+    const handleSearch = () => {
+        const filteredBatsman = data.filter((item:any)=>{
+            return item.batsman.toLowerCase().includes(searchPlayer?.toLowerCase())
         })
         setData(filteredBatsman)
-           setSearchPlayer('')
+        setSearchPlayer('')
     }
-    
 
 
   return (
-  <div>
-    <div className="p-10 text-4xl text-black font-bold">
-        Average of Batsman
-    </div>
+    <div>
+        <div> 
+            <h1 className='text-4xl font-bold p-4'>Average of Batsman</h1>
+        </div>
+        
+        <div>
+            <input 
+            type="text"
+            placeholder='Enter your player search..'
+            className='w-56 h-10 border-2 border-gray-400 p-2'
+            value={searchPlayer}
+            onChange={(event:any) =>{
+                setSearchPlayer(event.target.value)
+            }}
+            />
+            <button className="bg-red-500 text-white p-3" onClick={handleSearch}>Search</button>
+        </div>
 
-    <div className='flex gap-3 justify-center'>
-         <input 
-         type="text"  
-         className='h-10 w-56 border-2 border-gray-400 p-2'
-         placeholder='Search by player names'
-         value={searchPlayer}
-         onChange={(event) =>{
-            setSearchPlayer(event.target.value)
-         }}
-         />
-         <button className="bg-red-500 text-white border-none w-28" onClick={handleSearch}>Search</button>
-    </div>
-
-    <div className=" rounded-md p-6">
-          <table className="" >
-            <thead className="bg-black text-white uppercase border-b-4 border-gray-300" >
-                  <tr className="">
-                    <th className='p-5 text-md font-bold '>Batsman</th>
-                    <th className='p-5 text-md font-bold '>Strikerate</th>
-                    <th className='p-5 text-md font-bold '>Total Runs</th>
-                    <th className='p-5 text-md font-bold '>Average</th>
-                    <th className='p-5 text-md font-bold '>Number of balls</th>
-                    <th className='p-5 text-md font-bold '>Out</th>
-                  </tr>
-            </thead>
-            <tbody className=""> 
-                      {
-        data.map((item:any) =>{
-         return (
-            <tr className='even:bg-slate-200 hover:bg-red-500 text-gray-700 hover:text-white'>
-                    <td className="p-5 text-sm font-base">{item.batsman}</td>
-                    <td className="p-3 text-sm font-base">{item.strikerate}</td>
-                    <td className="p-3 text-sm font-base">{item.total_runs}</td>
-                    <td className="p-3 text-sm font-base">{item.average}</td>
-                    <td className="p-3 text-sm font-base">{item.numberofballs}</td>
-                    <td className="p-3 text-sm font-base">{item.out}</td>
+        <div>
+         <table>
+            <thead>
+                <tr className='bg-black text-white'>
+                     <th className='p-5 text-md font-semibold uppercase'>Batsman</th>
+                     <th className='p-5 text-md font-semibold uppercase'>Out</th>
+                     <th className='p-5 text-md font-semibold uppercase'>Total Runs</th>
+                     <th className='p-5 text-md font-semibold uppercase'>Number of Balls</th>
+                     <th className='p-5 text-md font-semibold uppercase'>Average</th>
+                     <th className='p-5 text-md font-semibold uppercase'>Strikerate</th>
                 </tr>
-         )
-        })
-      }
-          
+            </thead>
+            <tbody>
+               {
+                data.map((item:any)=>{
+                    return (
+                        <tr className='hover:bg-red-500 hover:text-white even:bg-slate-400'>
+                            <td className='p-3'>{item.batsman}</td>
+                            <td className='p-3'>{item.out}</td>
+                            <td className='p-3'>{item.total_runs}</td>
+                            <td className='p-3'>{item.numberofballs}</td>
+                            <td className='p-3'>{item.average}</td>
+                            <td className='p-3'>{item.strikerate}</td>
+                        </tr>
+                    )
+                })
+               }
             </tbody>
-        </table>
-
+         </table>
+        </div>
     </div>
-  </div>
   )
 }
 
 export default Average
+
+
+
