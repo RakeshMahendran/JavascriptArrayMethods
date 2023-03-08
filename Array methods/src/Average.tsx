@@ -54,6 +54,7 @@ const Average = () => {
          <table>
             <thead>
                 <tr className='bg-black text-white'>
+                    
                      <th className='p-5 text-md font-semibold uppercase'>Batsman</th>
                      <th className='p-5 text-md font-semibold uppercase'>Out</th>
                      <th className='p-5 text-md font-semibold uppercase'>Total Runs</th>
